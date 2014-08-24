@@ -8,8 +8,8 @@
 
 
 ##  Part 1: Merge the training and the test sets to create one data set
-# I install first the required packages such as read.table and download the file from the internet
-# Setting up my working directory in my computer
+I install first the required packages such as read.table and download the file from the internet
+Setting up my working directory in my computer
 # Read in the data from files using read.table()
 # Setting column names to the data imported
 # Merge the training and the test sets to create one data set
