@@ -10,7 +10,6 @@
 # 5. Creates a second, independent tidy data set with the average of each variable for each activity and each subject. 
 # Date for the Project: https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
 
-C:/Users/Online University/Desktop/Getting and Cleaning Data/Course Project
 
 #Installing first the packages data.table
 install.packages("data.table")
@@ -19,9 +18,12 @@ library(base)
 library(utils)
 library(data.table)
 
+#Downloading the file from the internet using download.file() function and unzipping it
 download.file(url="http://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip",destfile= "C:/Users/Online University/Desktop/Getting and Cleaning Data/Course Project/data.zip")
 zip.file<-'data.zip'
 unzip(zip.file)
+
+#Setting up my working directory in my computer
 
 setwd('C:/Users/Online University/Desktop/Getting and Cleaning Data/Course Project/UCI HAR Dataset');
 
@@ -95,11 +97,14 @@ colNames[i] = gsub("GyroMag","GyroMagnitude",colNames[i])
 colnames(finalData) = colNames;
 
 ## Answer to 5: Create a second, independent tidy data set with the average of each variable for each activity and each subject.
-# Create a new table, finalDataNoactivity_labels without the activity_labels column
-finalDataNoactivity_labels = finalData[,names(finalData) != 'activity_labels'];
-# Summarizing the finalDataNoactivity_labels table to include just the mean of each variable for each activity and each subject
-tidyData = aggregate(finalDataNoactivity_labels[,names(finalDataNoactivity_labels) != c('activityId','subjectId')],by=list(activityId=finalDataNoactivity_labels$activityId,subjectId = finalDataNoactivity_labels$subjectId),mean);
-# Merging the tidyData with activity_labels to include descriptive acitvity names
-tidyData = merge(tidyData,activity_labels,by='activityId',all.x=TRUE);
-# Export the tidyData set
-write.table(tidyData, './tidyData.txt',row.names=TRUE,sep='\t');
+# Create a new table, finalDataNoActivityType without the activityType column
+finalDataNoActivityType = finalData[,names(finalData) != 'activityType'];
+
+# Summarizing the finalDataNoActivityType table to include just the mean of each variable for each activity and each subject
+finaltidyDataset = aggregate(finalDataNoActivityType[,names(finalDataNoActivityType) != c('activityId','subjectId')],by=list(activityId=finalDataNoActivityType$activityId,subjectId = finalDataNoActivityType$subjectId),mean);
+
+# Merging the finaltidyDataset with activityType to include descriptive acitvity names
+finaltidyDataset = merge(finaltidyDataset,activityType,by='activityId',all.x=TRUE);
+
+# Export the finaltidyDataset set
+write.table(finaltidyDataset, './FinalDataSet.txt',row.names=TRUE,sep='\t');
